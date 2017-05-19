@@ -1,0 +1,140 @@
+# mysql shell 명령
+
+*show :보기, 확인
+*show databases :database 목록확인
+*use database : database를 사용하기 위해 접속
+*show tables : database에 저장된 table 목록확인
+
+
+# database 생성
+### CREATE DATABASE bitdb;
+
+# table 생성
+### CREATE TABLE addrbook
+
+mysql> create table addrbook (   //addrbook테이블을 만듦
+    -> name varchar(10), //name field를 varchar 10글자 크기로 지정
+    -> tel varchar(15), //tel field를 varchar 15글자 크기로 지정
+    -> addr varchar(50), //addr field를 varchar 50글자 크기로 지정
+    -> age int(5) //age field 정수 5자리크기로 지정
+    -> ) ;
+    
+    
+# table 구조 확인
+## describe addrbook ;
+    
+ mysql> describe addrbook ; //만든 구조 보여줌
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(10) | YES  |     | NULL    |       |
+| tel   | varchar(15) | YES  |     | NULL    |       |
+| addr  | varchar(50) | YES  |     | NULL    |       |
+| age   | int(5)      | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+    
+    
+# 데이터추가
+## 전체 필드에 데이터 추가
+mysql> insert addrbook valuse('홍길동','001','광주광역시',30) ;
+    
+### 특정 값만 추가
+mysql> insert addrbook(name,age) value('성춘향',16);
+mysql> insert addrbook valuse('이몽룡') ;
+
+
+# 데이터 조회, 열람
+## 전체 필드 조회, 열람
+mysql> select * from addrbook ;
++--------+-------+------------+------+
+| name   | tel   | addr       | age  |
++--------+-------+------------+------+
+| 홍길동 | 001   | 광주광역시 |   30 |
+| 이몽룡 | NULL  | NULL       | NULL |
+| 성춘향 | NULL  | NULL       |   16 |
+| 김씨   | 472   | 광주광역시 |   24 |
+| 이씨   | 345   | 전남       |   36 |
+| 양씨   | 57252 | 서울       |   35 |
+| 박씨   | 76543 | 제주도     |   27 |
+| 황씨   | 56334 | 인천       |   21 |
+| 송씨   | 08385 | 전남       |   47 |
++--------+-------+------------+------+    
+ 
+mysql> select name from addrbook ;
++--------+
+| name   |
++--------+
+| 홍길동 |
+| 이몽룡 |
+| 성춘향 |
+| 김씨   |
+| 이씨   |
+| 양씨   |
+| 박씨   |
+| 황씨   |
+| 송씨   |
++--------+  
+
+mysql> select name,age from addrbook;
++--------+------+
+| name   | age  |
++--------+------+
+| 홍길동 |   30 |
+| 이몽룡 | NULL |
+| 성춘향 |   16 |
+| 김씨   |   24 |
+| 이씨   |   36 |
+| 양씨   |   35 |
+| 박씨   |   27 |
+| 황씨   |   21 |
+| 송씨   |   47 |
++--------+------+
+
+
+
+# 특정 데이터 찾기
+mysql> select * from addrbook where name='홍길동';
++--------+------+------------+------+
+| name   | tel  | addr       | age  |
++--------+------+------------+------+
+| 홍길동 | 001  | 광주광역시 |   30 |
++--------+------+------------+------+
+
+mysql> select * from addrbook where age=16;
++--------+------+------+------+
+| name   | tel  | addr | age  |
++--------+------+------+------+
+| 성춘향 | NULL | NULL |   16 |
++--------+------+------+------+
+
+mysql> select * from addrbook where age>=16;
++--------+-------+------------+------+
+| name   | tel   | addr       | age  |
++--------+-------+------------+------+
+| 홍길동 | 001   | 광주광역시 |   30 |
+| 성춘향 | NULL  | NULL       |   16 |
+| 김씨   | 472   | 광주광역시 |   24 |
+| 이씨   | 345   | 전남       |   36 |
+| 양씨   | 57252 | 서울       |   35 |
+| 박씨   | 76543 | 제주도     |   27 |
+| 황씨   | 56334 | 인천       |   21 |
+| 송씨   | 08385 | 전남       |   47 |
++--------+-------+------------+------+
+
+
+mysql> select * from addrbook where name='홍길동' and age=30 ;
++--------+------+------------+------+
+| name   | tel  | addr       | age  |
++--------+------+------------+------+
+| 홍길동 | 001  | 광주광역시 |   30 |
++--------+------+------------+------+
+
+
+
+# 수정하기
+mysql> UPDATE addrbook SET tel='132', addr='남원', age=25  where name ='이몽룡';
+
+   
+   
+# 삭제하기
+DELETE FROM addrbook WHERE name = '성춘향' ; 
